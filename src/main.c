@@ -23,7 +23,8 @@ char **get_args(char *line) {
   char *token;
 
   if (!tokens) {
-
+    perror("Error allocating memory at get_args");
+    exit(1);
   }
 }
 
