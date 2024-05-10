@@ -26,6 +26,23 @@ char **get_args(char *line) {
     perror("Error allocating memory at get_args");
     exit(1);
   }
+  token = strtok(line, TOKEN_DELIM);
+  while (token != NULL) {
+    tokens[position] = token;
+    position++;
+
+    if (position >= buf_size) {
+      buf_size += TOKEN_BUF_SIZE;
+      tokens = realloc_j(tokens, buf_size * sizeof(char*));
+      if (!tokens) {
+        perror("Error allocating memory at realloc tokens");
+        exit(1);
+      }
+    }
+    token = strtok(NULL, TOK_DELIM);
+  }
+  tokens[position] = NULL;
+  return tokens;
 }
 
 int execute_command(char **args) {
